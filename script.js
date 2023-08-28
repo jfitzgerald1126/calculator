@@ -3,24 +3,29 @@ let displayValue = '0'
 let prev;
 let operator;
 let newPressed = false;
-
+let hasDecimal = false;
 
 // math functions
 function add (a, b) {
-    return +a + +b;
+    const ans = +a + +b;
+    return (ans.toString().length <= 10) ? ans : 'ERR';
 }
 
 function subtract(a, b) {
-    return +a - +b;
+    const ans = +a - +b;
+    return (ans.toString().length <= 10) ? ans : 'ERR';
 }
 
 function multiply(a, b) {
-    return +a * +b;
+    const ans = +a * +b;
+    return (ans.toString().length <= 10) ? ans : 'ERR';
 }
 
 function divide(a, b) {
     if (b != 0) {
-        return +a / +b;
+        const ans = +a / +b;
+        const decimalPlaces = 10 - Math.round(ans).toString().length;
+        return Math.round(ans * Math.pow(10, decimalPlaces)) / Math.pow(10, decimalPlaces);
     } else {
         return 'ERR';
     }    
@@ -64,6 +69,15 @@ const nums = document.querySelectorAll('.num');
 nums.forEach((num) => {
     num.addEventListener('click', function(num) {
         // activate / deactivate button
+        
+        // check if decimal can be added
+        if (this.textContent === '.') {
+            if (hasDecimal) {
+                return;
+            } else {
+                hasDecimal = true;
+            }
+        }
 
         // apend num to display
         newPressed = true;
@@ -71,11 +85,14 @@ nums.forEach((num) => {
     })
 })
 
-// wire up event listeners for operator buttons
+// set up event listeners for operator buttons
 const operators = document.querySelectorAll('.op');
 operators.forEach((op) => {
     if (op.textContent !== '=') {
         op.addEventListener('click', function(op) {
+            // only operate on operator press if new operand is provided
+            if (newPressed) executeEquals();
+            hasDecimal = false;
             prev = displayValue;
             operator = this.textContent;
         })
@@ -96,10 +113,9 @@ function updatePrev() {
     }
 }
 
-// operate
-const equals = document.querySelector('#equals');
-equals.addEventListener('click', (e) => {
+function executeEquals() {
     console.log(prev)
+    hasDecimal = false;
     if (prev) {
         let res = '';
         if (newPressed) {
@@ -116,5 +132,9 @@ equals.addEventListener('click', (e) => {
         newPressed = false;
         updateDisplay(res); 
     }
-})
+}
+
+// operate
+const equals = document.querySelector('#equals');
+equals.addEventListener('click', executeEquals);
 
