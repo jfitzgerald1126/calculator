@@ -90,6 +90,12 @@ const operators = document.querySelectorAll('.op');
 operators.forEach((op) => {
     if (op.textContent !== '=') {
         op.addEventListener('click', function(op) {
+            // check for err
+            if (checkErr()) {
+                clearDisplay();
+                return;
+            }
+
             // only operate on operator press if new operand is provided
             if (newPressed) executeEquals();
             hasDecimal = false;
@@ -98,6 +104,11 @@ operators.forEach((op) => {
         })
     }
 })
+
+function checkErr() {
+    const disp = document.querySelector('.display-text');
+    return disp.textContent === 'ERR';
+}
 
 // clear
 const clear = document.querySelector('#clear');
@@ -114,6 +125,12 @@ function updatePrev() {
 }
 
 function executeEquals() {
+    // check for err
+    if (checkErr()) {
+        clearDisplay();
+        return;
+    }
+
     console.log(prev)
     hasDecimal = false;
     if (prev) {
