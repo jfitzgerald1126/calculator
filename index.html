@@ -11,10 +11,12 @@
 <body>
     <div class="container">
         <div class="calc">
-            <div class="display">25</div>
+            <div class="display">
+                <div class="display-text">0</div>
+            </div>
             <div class="btn-container">
                 <div class="row">
-                    <button class="btn control">AC</button>
+                    <button class="btn control" id="clear">AC</button>
                     <button class="btn control">+/-</button>
                     <button class="btn control">%</button>
                     <button class="btn op">÷</button>
@@ -40,7 +42,7 @@
                 <div class="row">
                     <button class="btn num" id="zero">0</button>
                     <button class="btn num">.</button>
-                    <button class="btn op">=</button>
+                    <button class="btn op" id="equals">=</button>
                 </div>
             </div>
         </div>
