@@ -17,7 +17,11 @@ function multiply(a, b) {
 }
 
 function divide(a, b) {
-    return +a / +b;
+    if (b != 0) {
+        return +a / +b;
+    } else {
+        return 'ERR';
+    }    
 }
 
 
@@ -39,3 +43,25 @@ function operate(f, s, op) {
             break;
     }
 }
+
+function updateDisplay(numPressed) {
+    const disp = document.querySelector('.display-text');
+    if (disp.textContent.length >= 10) {
+        return;
+    }
+    disp.textContent = (disp.textContent === '0') ? numPressed : `${disp.textContent}${numPressed}`;
+}
+
+// wire up event listeners for number buttons
+const nums = document.querySelectorAll('.num');
+// console.log(nums);
+nums.forEach((num) => {
+    // console.log(num.textContent)
+    num.addEventListener('click', function(num) {
+        // activate / deactivate button
+
+        // apend num to display
+
+        updateDisplay(this.textContent);
+    })
+})
