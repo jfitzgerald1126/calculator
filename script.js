@@ -18,6 +18,7 @@ function subtract(a, b) {
 
 function multiply(a, b) {
     const ans = +a * +b;
+    // TODO: check if includes decimal, if so then round, then check length!
     return (ans.toString().length <= 10) ? ans : 'ERR';
 }
 
@@ -60,7 +61,7 @@ function updateDisplay(numPressed) {
     if (disp.textContent.length >= 10) {
         return;
     }
-    disp.textContent = (disp.textContent === '0' || prev === displayValue) ? numPressed : `${disp.textContent}${numPressed}`;
+    disp.textContent = ((disp.textContent === '0' && numPressed !== '.') || prev === displayValue) ? numPressed : `${disp.textContent}${numPressed}`;
     displayValue = disp.textContent;
 }
 
@@ -131,7 +132,6 @@ function executeEquals() {
         return;
     }
 
-    console.log(prev)
     hasDecimal = false;
     if (prev) {
         let res = '';
@@ -184,6 +184,44 @@ percent.addEventListener('click', (e) => {
         const res = operate(displayValue, 100, '÷');
         clearDisplay();
         updateDisplay(res);
+    }
+})
+
+// keyboard functionality
+const keyMappings = {
+    '0': '0',
+    '1': '1',
+    '2': '2',
+    '3': '3',
+    '4': '4',
+    '5': '5',
+    '6': '6',
+    '7': '7',
+    '8': '8',
+    '9': '9',
+    '.': '.',
+    '+': '+',
+    '-': '-',
+    '*': '×',
+    '/': '÷',
+    'Enter': '=',
+    'Backspace' : 'AC',
+    'Escape': 'AC',
+};
+
+window.addEventListener('keydown', function (e) {
+    const key = keyMappings[e.key];
+
+    if (key != undefined) {
+        e.preventDefault();
+
+        const buttons = document.querySelectorAll('.btn');
+        for (const button of buttons) {
+            if (button.textContent === key) {
+                button.click();
+                break; 
+            }
+        }
     }
 })
 
