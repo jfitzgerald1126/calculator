@@ -155,3 +155,35 @@ function executeEquals() {
 const equals = document.querySelector('#equals');
 equals.addEventListener('click', executeEquals);
 
+// swap signs
+const swap = document.querySelector('#swap-sign');
+swap.addEventListener('click', (e) => {
+    if (checkErr()) {
+        clearDisplay();
+        return;
+    }
+
+    if (displayValue !== '0') {
+        const newVal = (+displayValue * -1).toString();
+        displayValue = newVal;
+
+        const disp = document.querySelector('.display-text');
+        disp.textContent = newVal;
+    }
+})
+
+// percent
+const percent = document.querySelector('#percent');
+percent.addEventListener('click', (e) => {
+    if (checkErr()) {
+        clearDisplay();
+        return;
+    }
+
+    if (displayValue !== '0') {
+        const res = operate(displayValue, 100, '÷');
+        clearDisplay();
+        updateDisplay(res);
+    }
+})
+
