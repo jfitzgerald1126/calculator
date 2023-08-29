@@ -50,6 +50,16 @@ body {
     height: 80px;
     margin: 4px 2px;
     color: white;
+    transition: all 0.07s ease;
+}
+
+.btn:hover {
+    background-color: #aba8a8;
+}
+
+.btn-pressed {
+    transform: scale(1.05);
+    background-color: #cac6c6;
 }
 
 .num {

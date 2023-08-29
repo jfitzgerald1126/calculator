@@ -77,7 +77,7 @@ nums.forEach((num) => {
             clearDisplay();
             return;
         }
-        
+
         // check if decimal can be added
         if (this.textContent === '.') {
             if (hasDecimal) {
@@ -87,9 +87,17 @@ nums.forEach((num) => {
             }
         }
 
+        this.classList.add('num-pressed');
+
         // apend num to display
         newPressed = true;
         updateDisplay(this.textContent);
+    })
+})
+nums.forEach((num) => {
+    num.addEventListener('transitionend', function(e) {
+        if (e.propertyName !== 'transform') return;
+        e.target.classList.remove('num-pressed');
     })
 })
 
