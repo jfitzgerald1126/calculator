@@ -53,17 +53,18 @@ body {
     transition: all 0.07s ease;
 }
 
-.btn:hover {
+.num:hover {
     background-color: #aba8a8;
 }
 
-.btn-pressed {
-    transform: scale(1.05);
-    background-color: #cac6c6;
-}
 
 .num {
     background-color: grey;
+}
+
+.num-pressed {
+    transform: scale(1.05);
+    background-color: #b1abab;
 }
 
 #zero {
@@ -76,7 +77,25 @@ body {
     color: black;
 }
 
+.control:hover {
+    background-color: #e1e1de;
+}
+
+.control-pressed {
+    transform: scale(1.05);
+    background-color: #fffffb;
+}
+
 .op {
     background-color: #FF9500;
+}
+
+.op:hover {
+    background-color: #dd8305;
+}
+
+.op-pressed {
+    transform: scale(1.05);
+    background-color: #ffd000;
 }
 

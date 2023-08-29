@@ -74,6 +74,7 @@ nums.forEach((num) => {
     num.addEventListener('click', function(num) {
         // check for err
         if (checkErr()) {
+            displayValue = '0';
             clearDisplay();
             return;
         }
@@ -106,8 +107,11 @@ const operators = document.querySelectorAll('.op');
 operators.forEach((op) => {
     if (op.textContent !== '=') {
         op.addEventListener('click', function(op) {
+            this.classList.add('op-pressed')
+
             // check for err
             if (checkErr()) {
+                displayValue = '0';
                 clearDisplay();
                 return;
             }
@@ -120,6 +124,12 @@ operators.forEach((op) => {
         })
     }
 })
+operators.forEach((op) => {
+    op.addEventListener('transitionend', function(e) {
+        if (e.propertyName !== 'transform') return;
+        e.target.classList.remove('op-pressed');
+    })
+})
 
 function checkErr() {
     const disp = document.querySelector('.display-text');
@@ -129,9 +139,14 @@ function checkErr() {
 // clear
 const clear = document.querySelector('#clear');
 clear.addEventListener('click', (e) => {
+    e.target.classList.add('control-pressed');
     clearDisplay();
     displayValue = '0';
     prev = undefined;
+});
+clear.addEventListener('transitionend', function(e) {
+    if (e.propertyName !== 'transform') return;
+    e.target.classList.remove('control-pressed');
 });
 
 function updatePrev() {
@@ -143,6 +158,7 @@ function updatePrev() {
 function executeEquals() {
     // check for err
     if (checkErr()) {
+        displayValue = '0';
         clearDisplay();
         return;
     }
@@ -168,16 +184,21 @@ function executeEquals() {
 
 // operate
 const equals = document.querySelector('#equals');
-equals.addEventListener('click', executeEquals);
+equals.addEventListener('click', (e) => {
+    e.target.classList.add('op-pressed');
+    executeEquals();
+});
 
 // swap signs
 const swap = document.querySelector('#swap-sign');
 swap.addEventListener('click', (e) => {
     if (checkErr()) {
+        displayValue = '0';
         clearDisplay();
         return;
     }
 
+    e.target.classList.add('control-pressed');
     if (displayValue !== '0') {
         const newVal = (+displayValue * -1).toString();
         displayValue = newVal;
@@ -186,20 +207,30 @@ swap.addEventListener('click', (e) => {
         disp.textContent = newVal;
     }
 })
+swap.addEventListener('transitionend', function(e) {
+    if (e.propertyName !== 'transform') return;
+    e.target.classList.remove('control-pressed');
+})
 
 // percent
 const percent = document.querySelector('#percent');
 percent.addEventListener('click', (e) => {
     if (checkErr()) {
+        displayValue = '0';
         clearDisplay();
         return;
     }
 
+    e.target.classList.add('control-pressed');
     if (displayValue !== '0') {
         const res = operate(displayValue, 100, '÷');
         clearDisplay();
         updateDisplay(res);
     }
+})
+percent.addEventListener('transitionend', function(e) {
+    if (e.propertyName !== 'transform') return;
+    e.target.classList.remove('control-pressed');
 })
 
 // keyboard functionality
