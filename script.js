@@ -18,7 +18,7 @@ function subtract(a, b) {
 
 function multiply(a, b) {
     const ans = +a * +b;
-    if (ans <= 999999999 || ans >= -999999999) {
+    if (ans <= 999999999 && ans >= -999999999) {
         const decimalPlaces = 10 - Math.round(ans).toString().length;
         return Math.round(ans * Math.pow(10, decimalPlaces)) / Math.pow(10, decimalPlaces);
     }
